@@ -1,9 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class GhostMove : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float interval = 5f;
+    [SerializeField] private float rotationSpeed = 30f;
+    private float rotate = 0;
     //[SerializeField] private float  = 1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,24 +19,20 @@ public class GhostMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveForward();
+        Move();
 
-        MoveBack();
+        Rotation();
     }
 
-    private void MoveForward()
+    private void Move()
     {
-        if (Keyboard.current.wKey.isPressed)
-        {
-            transform.position += new Vector3(0, 0f, moveSpeed) * Time.deltaTime;
-        }
+        float cos = Mathf.Cos(Time.time * interval);
+        transform.position += new Vector3(0, 0f, moveSpeed) * cos * Time.deltaTime;
     }
 
-    private void MoveBack()
+    private void Rotation()
     {
-        if (Keyboard.current.sKey.isPressed)
-        {
-            transform.position -= new Vector3(0, 0f, moveSpeed) * Time.deltaTime;
-        }
+        rotate = Time.time * rotationSpeed;
+        transform.rotation = Quaternion.Euler(0, rotate, 0);
     }
 }
