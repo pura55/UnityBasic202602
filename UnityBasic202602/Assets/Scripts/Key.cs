@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Key : MonoBehaviour
 {
@@ -7,26 +8,34 @@ public class Key : MonoBehaviour
     
     //  イベント宣言
     public static event Action<KeyType> OnKeyCollected;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public static event Action<KeyType> OnShowGetKey;
+
+    public static event Action<KeyType> OnHideGetKey;
     
-    private void OnTriggerEnter(Collider other)
+
+    private void OnTriggerStay(Collider other)
     {
-        //  接触したGameObjectがPlayerである場合、Keyを消す
+        //  侵入しているGameObjectがPlayerである場合、Keyを消す
         if(other.CompareTag("Player"))
         {
-            OnKeyCollected?.Invoke(keyType);    //  イベントの呼び出し
-            Destroy(gameObject);
+            OnShowGetKey?.Invoke(keyType);
+
+            if(Keyboard.current.eKey.isPressed)
+            {
+                OnKeyCollected?.Invoke(keyType);    //  イベントの呼び出し
+                OnHideGetKey?.Invoke(keyType);
+                Destroy(gameObject);
+            }
         } 
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //  接触したGameObjectがPlayerである場合、Keyを消す
+        if (other.CompareTag("Player"))
+        {
+            OnHideGetKey?.Invoke(keyType);
+        }
     }
 }   

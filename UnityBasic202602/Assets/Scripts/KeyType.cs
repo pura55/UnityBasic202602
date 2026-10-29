@@ -2,8 +2,7 @@ using UnityEngine;
 
 public enum KeyType
 {
-    Red,
-    Blue,
-    Green,
-    Blonze
+    LivingKey,
+    BedroomKey,
+    None
 }
