@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 public class Key : MonoBehaviour
 {
     [SerializeField] private KeyType keyType;
-    
+    [SerializeField] private AudioGenerator audioGenerator;
+
     //  イベント宣言
     public static event Action<KeyType> OnKeyCollected;
 
@@ -23,6 +25,7 @@ public class Key : MonoBehaviour
 
             if(Keyboard.current.eKey.isPressed)
             {
+                audioGenerator.GenerateSound();
                 OnKeyCollected?.Invoke(keyType);    //  イベントの呼び出し
                 OnHideGetKey?.Invoke(keyType);
                 Destroy(gameObject);

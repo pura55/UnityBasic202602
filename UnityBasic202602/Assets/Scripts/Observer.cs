@@ -9,6 +9,8 @@ namespace StealthGame
     {
         private Transform player;
         private bool m_IsPlayerInRange;
+        public event Action<Transform> OnGameOver;
+        [SerializeField] private GameManager gameManager;
 
         private void Start()
         {
@@ -32,6 +34,7 @@ namespace StealthGame
                 {
                     if (raycastHit.collider.CompareTag("Player"))
                     {
+                        gameManager.ExecuteGameOver(player);
                         Debug.Log("Playerを発見！");
                     }
                 }
