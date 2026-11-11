@@ -12,6 +12,8 @@ namespace StealthGame
         public event Action<Transform> OnGameOver;
         [SerializeField] private GameManager gameManager;
 
+        public event Action<Transform> OnFindPlayer; // プレイヤー発見時のイベント
+
         private void Start()
         {
             //  シーン上にいるプレイヤーを探して登録する
@@ -25,6 +27,10 @@ namespace StealthGame
             if (m_IsPlayerInRange)
             {
                 //  索敵用Raycastを準備
+                if(player == null)
+                {
+                    player = GameObject.FindGameObjectWithTag("Player")?.transform;
+                }
                 Vector3 direction = player.position - transform.position + Vector3.up;  //  基準点より上からRayを飛ばす（＋Vector3.Up）
                 Ray ray = new Ray(transform.position, direction);
                 RaycastHit raycastHit;
@@ -34,7 +40,7 @@ namespace StealthGame
                 {
                     if (raycastHit.collider.CompareTag("Player"))
                     {
-                        gameManager.ExecuteGameOver(player);
+                        gameManager.ExecuteGameOver();
                         Debug.Log("Playerを発見！");
                     }
                 }
