@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a2f3e6b0d9ca1244b096deb3f08f512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GargoyleMovement
-  turnSpeed: 5
+  turnSpeed: 10
   turnInterval: 4
   targetRotationAmount: 90
 --- !u!1001 &3426523637537600564
